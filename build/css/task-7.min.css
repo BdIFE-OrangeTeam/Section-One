@@ -72,6 +72,11 @@ body header nav ul li a {
   height: 58px;
   line-height: 58px;
 }
+body header nav ul li a.active {
+  transition: .3s;
+  border-bottom: 5px #E74F40 solid;
+  color: #E74F4D;
+}
 body header nav ul li a:hover:not(.logo) {
   transition: .3s;
   border-bottom: 5px #E74F40 solid;
