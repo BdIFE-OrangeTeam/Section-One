@@ -1,0 +1,184 @@
+/* styles */
+
+.container {
+    background-color: #dfdfdf;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear:both;
+}
+
+header {
+    background: #333;
+}
+
+header .site-title {
+    float: left;
+    font-size: 32px;
+}
+
+header nav {
+    float: right;
+}
+
+header ul li {
+    list-style: none;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+header ul li a{
+    color: #FFF;
+    text-decoration: none;
+}
+
+article, section {
+    background-color: #fff;
+    margin: 20px 20px;
+    padding: 10px 20px;
+}
+
+article p {
+    text-indent: 2em;
+    line-height: 1.7em;
+}
+
+.article-title {
+    font-size: 20px;
+}
+
+.article-sec-title {
+    font-size: 16px;
+    color: #68665a;
+}
+
+.article-author {
+    font-size: 12px;
+    color: #c1c6c0;
+    text-indent: 0px;
+}
+
+ul li {
+    list-style: none;
+}
+
+.title-image {
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #cecece;
+}
+
+.image-title {
+    text-align: center;
+    margin: 10px 0;
+}
+
+.title-image img {
+    width: 150px;
+}
+
+table,td {
+    border: 1px solid #c6c6c6;
+}
+
+table {
+    width: 100%;
+    font-size: 12px;
+}
+
+table td {
+    /* height: 2em; */
+    padding: 0.5em;
+}
+
+table thead {
+    background-color: #333;
+    font-weight: bold;
+    color: #FFF;
+}
+
+table tfoot {
+    background-color: #ccc;
+    font-weight: bold;
+}
+
+.side-bar {
+    border-left: 3px solid #cacaca;
+    padding: 10px;
+    margin: 10px;
+    font-weight: bold;
+}
+
+form {
+    font-size: 12px;
+}
+
+form div {
+    margin: 5px;
+}
+
+form label {
+    display: inline-block;
+    width: 30%;
+    text-align: right;
+    vertical-align: middle;
+}
+
+form input,.label-right {
+    text-align: left;
+    margin: 5px;
+    vertical-align: middle;
+}
+
+form input,input:hover {
+    height: 1.2em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input.write,textarea.write {
+    width: 30%;
+}
+
+form select {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.textarea-label {
+    vertical-align: top;
+}
+
+textarea {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    height: 2.5em;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFF;
+    background-color: #3355d0;
+}
+
+footer {
+    background-color: #000;
+    text-align: center;
+    color: #FFF;
+    height: 100px;
+    line-height: 100px;
+}
