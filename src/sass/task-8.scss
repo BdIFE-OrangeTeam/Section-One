@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  .row {
+    &:before,
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+
+    [class*='col-'] {
+      // background: black;
+      float: left;
+      height: 50px;
+      min-height: 1px;
+      // padding: 10px; // gutter
+      margin: 10px; // gutter
+      border: 1px #999 solid;
+      background-color: #ccc;
+      // background-color: #FFDCDC;
+    }
+
+    // generate col-n function with for-circle
+    @mixin generateColN ($length: 12, $gutter: 20px) {
+      @media (min-width: 769px) {
+        @for $index from 1 to ($length - 1) {
+          .col-md-#{$index} {
+            width: calc(#{$index * (100% / $length)} - #{$gutter});
+          }
+        }
+        .col-md-#{$length} {
+          width: calc(100% - #{$gutter});
+        }
+      }
+
+      @media (max-width: 769px) {
+        @for $index from 1 to ($length - 1) {
+          .col-sm-#{$index} {
+            width: calc(#{$index * (100% / $length)} - #{$gutter});
+          }
+        }
+        .col-sm-#{$length} {
+          width: calc(100% - #{$gutter});
+        }
+      }
+    }
+
+    @include generateColN();
+  }
+}
