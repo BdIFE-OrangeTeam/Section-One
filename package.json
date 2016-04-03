@@ -5,9 +5,9 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp",
-    "build": "gulp",
-    "release": "gulp"
+    "start": "gulp; // @TODO FOOL TO AVOID ARGUMENTS",
+    "build": "gulp; //",
+    "release": "gulp; //"
   },
   "keywords": [
     "gulp"

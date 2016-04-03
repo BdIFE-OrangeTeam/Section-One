@@ -71,6 +71,7 @@
     * `npm install`
 * Develop Mode(开发)
     * `npm run start`
+    * `npm run start --index task-8.html` 设置浏览器默认打开路径`/task-8.html`
 * Release Mode(发布)
     * `npm run build`
 
