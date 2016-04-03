@@ -1,0 +1,115 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.center-wrapper {
+  display: flex;
+  height: 300px;
+  background-color: black;
+
+  .center-box {
+    width: 100px;
+    height: 100px;
+    margin: auto; /* Magic ! */
+    background-color: #FFF;
+  }
+}
+
+.table-middle,.table {
+  display: table;
+
+  .table-cell {
+    display: table-cell;
+    vertical-align: middle;
+  }
+}
+
+body {
+  padding: 20px;
+  // ul {
+  //   &.flex-container {
+  //     // create a flex layout context
+  //     display: flex;
+  //     // Then we define the flow direction and if we allow the items to wrap
+  //     // This the same as:
+  //     //   flex-direction: row;
+  //     //   flex-wrap: wrap;
+  //     flex-flow: row-reverse wrap;
+  //     // define how is distributed the remaining space
+  //     justify-content: space-around;
+  //   }
+  //
+  //   li {
+  //     list-style: none;
+  //
+  //     &.flex-item {
+  //       background: tomato;
+  //       padding: 5px;
+  //       width: 200px;
+  //       height: 150px;
+  //       margin-top: 10px;
+  //
+  //       line-height: 150px;
+  //       color: white;
+  //       font-weight: bold;
+  //       font-size: 3em;
+  //       text-align: center;
+  //     }
+  //   }
+  // }
+
+  .container {
+    padding: 20px;
+    border: 1px #ccc solid;
+    // height: 300px;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    @media (min-width: 640px) {
+      align-items: center;
+    }
+
+    @media (max-width: 640px) {
+      align-items: flex-start;
+    }
+
+    .item {
+      width: 150px;
+      padding:20px;
+      margin: 20px 0;
+      border: 1px #f00 solid;
+      // flex: 1 0 auto;
+
+      &.first {
+        height: 150px;
+      }
+
+      &.second {
+        height: 100px;
+      }
+
+      &.three {
+        height: 40px;
+      }
+
+      &.four {
+        height: 200px;
+        border:1px #00f solid;
+
+        @media (max-width: 640px) {
+          order: -1;
+        }
+      }
+    }
+  }
+}
