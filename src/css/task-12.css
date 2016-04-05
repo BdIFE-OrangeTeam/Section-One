@@ -1,0 +1,112 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container table.rank {
+  font-weight: 600;
+  margin: 2rem;
+}
+.container table.rank tr:nth-child(2n) {
+  background-color: #FFF;
+}
+.container table.rank tr:nth-child(2n+1) {
+  background-color: #CCC;
+}
+.container table.rank tr:first-of-type {
+  background-color: #000;
+  color: #FFF;
+}
+.container table.rank tr:nth-child(4), .container table.rank tr:nth-child(2), .container table.rank tr:nth-child(3) {
+  color: #F00;
+}
+.container .transform {
+  margin: 2rem;
+  width: 15rem;
+  position: relative;
+}
+.container .transform input {
+  padding: .5rem 1rem;
+  border-radius: .5rem;
+  outline: none;
+  width: 15rem;
+  transition: width ease-in-out 1s;
+}
+.container .transform input:focus {
+  width: 10rem;
+}
+.container .transform button {
+  display: inline-block;
+  position: absolute;
+  right: 0;
+  top: 2.5px;
+  z-index: -1;
+  background-color: #00C2FF;
+  outline: none;
+  border: none;
+  width: 4rem;
+  height: 30px;
+  border-radius: 1.5rem;
+}
+.container .banner {
+  margin-left: 2rem;
+  position: relative;
+  width: 300px;
+  overflow: hidden;
+  margin-top: 50px;
+}
+.container .banner .banner-container {
+  width: 300%;
+  height: 100%;
+  letter-spacing: 0;
+  word-spacing: 0;
+  position: relative;
+  left: 0;
+  font-size: 0;
+  transition: .5s left;
+}
+.container .banner .banner-container li {
+  display: inline-block;
+  list-style: none;
+  width: 300px;
+  height: 100px;
+}
+.container .banner .banner-container li:first-of-type {
+  background-color: #F00;
+}
+.container .banner .banner-container li:nth-child(2) {
+  background-color: #0F0;
+}
+.container .banner .banner-container li:last-of-type {
+  background-color: #00F;
+}
+.container .banner .banner-controller {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 16px;
+}
+.container .banner .banner-controller a {
+  text-decoration: none;
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  background-color: #FFF;
+  opacity: .5;
+  text-align: center;
+  color: #ccc;
+}
+.container .banner .banner-controller a:visited, .container .banner .banner-controller a:link {
+  color: #ccc;
+}
+.container .banner #img1:target ~ .banner-container {
+  left: 0;
+}
+.container .banner #img2:target ~ .banner-container {
+  left: -100%;
+}
+.container .banner #img3:target ~ .banner-container {
+  left: -200%;
+}
