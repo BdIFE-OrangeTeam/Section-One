@@ -399,15 +399,17 @@ body .container .articles .article-row .image {
   -webkit-flex-flow: row wrap;
       -ms-flex-flow: row wrap;
           flex-flow: row wrap;
-  -webkit-justify-content: space-between;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-justify-content: space-around;
+      -ms-flex-pack: distribute;
+          justify-content: space-around;
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-top: .5rem;
 }
 body .container .articles .article-row .image img {
-  width: 4rem;
+  width: 5rem;
+  height: 5rem;
   -webkit-flex: 1;
       -ms-flex: 1;
           flex: 1;

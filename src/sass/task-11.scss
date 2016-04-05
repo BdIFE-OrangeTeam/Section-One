@@ -454,11 +454,13 @@ body {
           line-height: 5rem;
           display: flex;
           flex-flow: row wrap;
-          justify-content: space-between;
+          justify-content: space-around;
           align-items: center;
+          margin-top: .5rem;
 
           img {
-            width: 4rem;
+            width: 5rem;
+            height: 5rem;
             flex: 1;
             margin: 0 .1rem;
           }
