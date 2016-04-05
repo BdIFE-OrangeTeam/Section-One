@@ -5,9 +5,9 @@
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "gulp; // @TODO FOOL TO AVOID ARGUMENTS",
-    "build": "gulp; //",
-    "release": "gulp; //"
+    "start": "gulp; # @TODO FOOL TO AVOID ARGUMENTS",
+    "build": "gulp; #",
+    "release": "gulp; #"
   },
   "keywords": [
     "gulp"
@@ -17,6 +17,8 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-cached": "^1.1.0",
+    "gulp-changed": "^1.3.0",
     "gulp-clean-css": "^2.0.4",
     "gulp-concat": "^2.6.0",
     "gulp-concat-css": "^2.2.0",
@@ -24,8 +26,10 @@
     "gulp-jshint": "^2.0.0",
     "gulp-notify": "^2.2.0",
     "gulp-ruby-sass": "^2.0.6",
+    "gulp-sass": "^2.2.0",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-uglify": "^1.5.3",
+    "gulp-watch": "^4.3.5",
     "gulp-webserver": "^0.9.1",
     "jshint": "^2.9.1",
     "livereload": "^0.4.1"
