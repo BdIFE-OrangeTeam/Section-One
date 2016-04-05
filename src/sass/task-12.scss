@@ -1,0 +1,151 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+.container {
+  // background-color: #000;
+  table.rank {
+    font-weight: 600;
+    margin: 2rem;
+
+    tr {
+      &:nth-child(2n) {
+        background-color: #FFF;
+      }
+
+      &:nth-child(2n+1) {
+        background-color: #CCC;
+      }
+
+      &:first-of-type {
+        background-color: #000;
+        color: #FFF;
+      }
+
+      &:nth-child(4),&:nth-child(2),&:nth-child(3) {
+        color: #F00;
+      }
+    }
+  }
+
+  .transform {
+    margin: 2rem;
+    width: 15rem;
+    position: relative;
+
+    input {
+      padding: .5rem 1rem;
+      border-radius: .5rem;
+      outline: none;
+      width:15rem;
+      transition: width ease-in-out 1s;
+
+      &:focus {
+        width: 10rem;
+      }
+    }
+
+    button {
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      top: 2.5px;
+      z-index: -1;
+      background-color: #00C2FF;
+      outline: none;
+      border: none;
+      width: 4rem;
+      height: 30px;
+      border-radius: 1.5rem;
+    }
+  }
+
+  .banner {
+    margin-left: 2rem;
+    position: relative;
+    width: 300px;
+    overflow: hidden;
+    margin-top: 50px;
+
+    // span {
+    //   display: inline-block;
+    //   width: 300px;
+    //   height: 100px;
+    //   &#img1 {
+    //     background-color: #F00;
+    //   }
+    //   &#img2 {
+    //     background-color: #0F0;
+    //   }
+    //   &#img3 {
+    //     background-color: #00F;
+    //   }
+    // }
+
+    .banner-container {
+      width: 300%;
+      height: 100%;
+      letter-spacing: 0;
+      word-spacing: 0;
+      position: relative;
+      left: 0;
+      font-size: 0; // 字体大小会引起block间隔, 去掉试试
+      transition: .5s left;
+
+      li {
+        display: inline-block;
+        list-style: none;
+        width: 300px;
+        height: 100px;
+
+        &:first-of-type {
+          background-color: #F00;
+        }
+        &:nth-child(2) {
+          background-color: #0F0;
+        }
+        &:last-of-type {
+          background-color: #00F;
+        }
+      }
+    }
+
+    .banner-controller {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      font-size: 16px;
+
+      a {
+        text-decoration: none;
+        display: inline-block;
+        width: 2rem;
+        height: 2rem;
+        line-height: 2rem;
+        background-color: #FFF;
+        opacity: .5;
+        text-align: center;
+        color: #ccc;
+
+        &:visited,&:link {
+          color:#ccc;
+        }
+      }
+    }
+
+    #img1:target~.banner-container {
+      left: 0;
+    }
+
+    #img2:target~.banner-container {
+      left: -100%;
+    }
+
+    #img3:target~.banner-container {
+      left: -200%;
+    }
+  }
+}
