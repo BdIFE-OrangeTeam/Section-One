@@ -43,9 +43,7 @@ var gulp = require('gulp'),
     sourcemaps = require('gulp-sourcemaps'), // js blank
     imagemin = require('gulp-imagemin'), // compress images
     notify = require('gulp-notify'), // notify info
-    watch = require('gulp-watch'), //
-    // changed = require('gulp-changed'), //
-    // cached = require('gulp-cached'), //
+    // watch = require('gulp-watch'), //
     livereload = require('gulp-livereload'), // livereload
     webserver = require('gulp-webserver'); // webserver
 
@@ -66,6 +64,7 @@ var Compile = function (file) {
           {test: /\.js$/, loader: 'js'},
           {test: /\.(png|jpg)$/, loader: 'image'},
           {test: /\.html$/, loader: 'html'},
+          {test: /\.(eot|woff|ttf|svg)$/, loader: 'fonts'},
         ],
 
         deals: {
@@ -177,7 +176,6 @@ gulp.task('sass', function (event) {
 gulp.task('uglify', function () {
     if (MODE === 'build') {
         gulp.src(path.join(SOURCE_DIR, 'js/**/*.js'))
-            .pipe(watch(path.join(SOURCE_DIR, 'js/**/*.js')))
             .pipe(jshint())
             .pipe(jshint.reporter('default'))
             .pipe(sourcemaps.init())
@@ -197,7 +195,6 @@ gulp.task('uglify', function () {
 gulp.task('cleanCss', function () {
     if (MODE === 'build') {
         gulp.src(path.join(SOURCE_DIR, 'css/**/*.css'))
-            .pipe(watch(path.join(SOURCE_DIR, 'css/**/*.css')))
             .pipe(autoprefixer('last 2 version'))
             .pipe(sourcemaps.init())
             .pipe(cleanCss())
@@ -215,7 +212,6 @@ gulp.task('cleanCss', function () {
 // build image
 gulp.task('imagemin', function () {
     gulp.src(path.join(SOURCE_DIR, 'images/**/*'))
-        .pipe(watch(path.join(SOURCE_DIR, 'images/**/*')))
         .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true}))
         .pipe(gulp.dest(path.join(BUILD_DIR, 'images')))
         .pipe(livereload());
@@ -223,7 +219,6 @@ gulp.task('imagemin', function () {
 
 gulp.task('fonts', function () {
     gulp.src(path.join(SOURCE_DIR, 'fonts/**/*'))
-        .pipe(watch(path.join(SOURCE_DIR, 'fonts/**/*')))
         .pipe(gulp.dest(path.join(BUILD_DIR, 'fonts')));
 });
 
