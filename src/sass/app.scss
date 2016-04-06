@@ -10,7 +10,7 @@ $color_gray: #929293;
 .clearfix::before,
 .clearfix::after {
   display: table;
-  content: "";
+  content: ""; 
 }
 .clearfix::after {
   clear: both;
@@ -19,6 +19,7 @@ $color_gray: #929293;
 .bg-white {
   background-color: #FFF;
 }
+
 .bg-gray {
   background-color: $color_gray;
 }

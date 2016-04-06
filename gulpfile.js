@@ -53,6 +53,88 @@ var MODE = process.env.npm_lifecycle_event;
 var SOURCE_DIR = './src',
     BUILD_DIR = './build';
 
+/**
+ * Compile With file
+ *    file type: {type: 'changed|added', path: filePATH}
+ */
+var Compile = function (file) {
+      // basic config
+      var config = {
+        loaders: [
+          {test: /\.scss$/, loader: 'sass'},
+          {test: /\.css$/, loader: 'css'},
+          {test: /\.js$/, loader: 'js'},
+          {test: /\.(png|jpg)$/, loader: 'image'},
+          {test: /\.html$/, loader: 'html'},
+        ],
+
+        deals: {
+          sass: function compileSass (filePath, buildPath) {
+            return sass(filePath, {style: 'expanded'})
+                   .on('error', sass.logError)
+                   .pipe(gulp.dest(path.join(buildPath || SOURCE_DIR, 'css')));
+          },
+          css: function compileCss (filePath, buildPath) {
+            if (MODE === 'build') {
+                gulp.src(filePath)
+                    .pipe(autoprefixer('last 2 version'))
+                    .pipe(sourcemaps.init())
+                    .pipe(cleanCss())
+                    .pipe(sourcemaps.write())
+                    .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'css')))
+                    .pipe(livereload());
+            } else {
+                gulp.src(filePath)
+                    .pipe(autoprefixer('last 2 version'))
+                    .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'css')))
+                    .pipe(livereload());
+            }
+          },
+          js: function compileJs (filePath, buildPath) {
+            if (MODE === 'build') {
+                gulp.src(filePath)
+                    .pipe(jshint())
+                    .pipe(jshint.reporter('default'))
+                    .pipe(sourcemaps.init())
+                    .pipe(uglify())
+                    .pipe(sourcemaps.write())
+                    .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'js')))
+                    .pipe(livereload());
+            } else {
+                gulp.src(filePath)
+                    .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'js')))
+                    .pipe(livereload());
+            }
+          },
+          image: function compileImage (filePath, buildPath) {
+            gulp.src(filePath)
+                .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true}))
+                .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'images')))
+                .pipe(livereload());
+          },
+          fonts: function copyFonts (filePath, buildPath) {
+            gulp.src(filePath)
+                .pipe(gulp.dest(path.join(buildPath || BUILD_DIR, 'images')))
+                .pipe(livereload());
+          },
+          html: function copyHtml (filePath, buildPath) {
+            gulp.src(filePath)
+                .pipe(gulp.dest(path.join(__dirname, buildPath || BUILD_DIR)))
+                .pipe(livereload());
+          },
+        },
+      };
+
+      // deal with file
+      for (var index in config.loaders) {
+        if (config.loaders[index].test.test(file.path)) {
+          // console.log(file.path + ' is ' + config.loaders[index].loader);
+          config.deals[config.loaders[index].loader](file.path);
+        }
+      }
+  };
+
+
 gulp.task('webserver', function () {
   if (MODE === 'build') return ;
 
@@ -73,36 +155,21 @@ gulp.task('index', function () {
         .pipe(gulp.dest(path.join(__dirname, BUILD_DIR)));
 });
 
+
+var event = {
+  sass: function (file) {
+    return sass(file.path, {style: 'expanded'})
+           .on('error', sass.logError)
+           .pipe(gulp.dest(path.join(SOURCE_DIR, 'css')));
+  }
+};
+
 // common
 gulp.task('sass', function (event) {
-    // return gulp.src(path.join(SOURCE_DIR, 'sass/**/*.scss'))
-    //     .sass({style: 'expanded'})
-    //     // .pipe(cached('linting'))
-    //     .pipe(changed(path.join(SOURCE_DIR, 'css')))
-    //     .on('error', function (err) {
-    //         console.error('Error!', err.message);
-    //     })
-    //     // .pipe(sourcemaps.write('maps', {
-    //     //   includeContent: false,
-    //     //   sourceRoot: 'source',
-    //     // }))
-    //     .pipe(gulp.dest(path.join(SOURCE_DIR, 'css')));
-        // .pipe(notify({message: 'Sass Build Complete.'}));
-
-    // return gulp.src(path.join(SOURCE_DIR, 'sass/**/*.scss'))
-    //            // .pipe(watch('sass/*.scss'))
-    //            .pipe(sass({style: "expanded"}))
-    //            .pipe(gulp.dest(path.join(SOURCE_DIR, 'css')));
-
     return sass(path.join(SOURCE_DIR, 'sass/**/*.scss'), {style: 'expanded'})
-          //  .pipe(changed(path.join(SOURCE_DIR, 'css'), {extension: '.css'}))
-          //  .pipe(watch(path.join(SOURCE_DIR, 'sass/**/*.scss')))
-          //  .pipe(sass(path.join(SOURCE_DIR, 'sass/**/*.scss')))
            .on('error', sass.logError)
-          //  .pipe(sourcemaps.write())
            .pipe(gulp.dest(path.join(SOURCE_DIR, 'css')));
 });
-
 
 
 // build mode: compress js
@@ -113,20 +180,15 @@ gulp.task('uglify', function () {
             .pipe(watch(path.join(SOURCE_DIR, 'js/**/*.js')))
             .pipe(jshint())
             .pipe(jshint.reporter('default'))
-            // .pipe(concat('app.min.js'))
             .pipe(sourcemaps.init())
             .pipe(uglify())
             .pipe(sourcemaps.write())
             .pipe(gulp.dest(path.join(BUILD_DIR, 'js')))
             .pipe(livereload());
-            // .pipe(notify({message: 'Uglify Js Complete.'}));
     } else {
         gulp.src(path.join(SOURCE_DIR, 'js/**/*.js'))
-            // .pipe(watch(path.join(SOURCE_DIR, 'js/**/*.js')))
-            // .pipe(concat('app.min.js'))
             .pipe(gulp.dest(path.join(BUILD_DIR, 'js')))
             .pipe(livereload());
-            // .pipe(notify({message: 'Copy Js Complete.'}));
     }
 });
 
@@ -136,23 +198,17 @@ gulp.task('cleanCss', function () {
     if (MODE === 'build') {
         gulp.src(path.join(SOURCE_DIR, 'css/**/*.css'))
             .pipe(watch(path.join(SOURCE_DIR, 'css/**/*.css')))
-            // .pipe(changed(path.join(BUILD_DIR, 'css')))
             .pipe(autoprefixer('last 2 version'))
-            // .pipe(concat('app.min.css'))
             .pipe(sourcemaps.init())
             .pipe(cleanCss())
             .pipe(sourcemaps.write())
             .pipe(gulp.dest(path.join(BUILD_DIR, 'css')))
             .pipe(livereload());
-            // .pipe(notify({message: 'MinifyCss Complete.'}));
     } else {
         gulp.src(path.join(SOURCE_DIR, 'css/**/*.css'))
-            // .pipe(watch(path.join(SOURCE_DIR, 'css/**/*.css')))
             .pipe(autoprefixer('last 2 version'))
-            // .pipe(concat('app.min.css'))
             .pipe(gulp.dest(path.join(BUILD_DIR, 'css')))
             .pipe(livereload());
-            // .pipe(notify({message: 'Copy Css Complete.'}));
     }
 });
 
@@ -163,39 +219,27 @@ gulp.task('imagemin', function () {
         .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true}))
         .pipe(gulp.dest(path.join(BUILD_DIR, 'images')))
         .pipe(livereload());
-        // .pipe(notify({message: 'Compress Images Complete.'}));
 });
 
 gulp.task('fonts', function () {
     gulp.src(path.join(SOURCE_DIR, 'fonts/**/*'))
         .pipe(watch(path.join(SOURCE_DIR, 'fonts/**/*')))
-        .pipe(gulp.dest(path.join(BUILD_DIR, 'images')));
+        .pipe(gulp.dest(path.join(BUILD_DIR, 'fonts')));
 });
 
 gulp.task('watch', function () {
     if (MODE === 'build') return ;
 
-   gulp.watch(path.join(SOURCE_DIR, 'sass/**/*.scss'), ['sass']);
-   // gulp.watch(path.join(SOURCE_DIR, 'css/**/*.css'), ['cleanCss']);
-   // gulp.watch(path.join(SOURCE_DIR, 'js/**/*.js'), ['uglify']);
-   gulp.watch(path.join(SOURCE_DIR, 'images/*'), ['imagemin']);
-   gulp.watch(path.join(SOURCE_DIR, 'fonts/*'), ['fonts']);
-   // gulp.watch(path.join(SOURCE_DIR, 'index.html'), ['index.html']);
-
+    // gulp.watch(path.join(SOURCE_DIR, 'sass/**/*.scss'), ['sass']);
     // gulp.watch('sass/**/*.scss', {cwd: SOURCE_DIR}, ['sass']);
-    // gulp.watch('css/**/*.css', {cwd: SOURCE_DIR}, ['cleanCss']);
-    // gulp.watch('js/**/*.js', {cwd: SOURCE_DIR}, ['uglify']);
-    // gulp.watch('images/*', {cwd: SOURCE_DIR}, ['imagemin']);
-    // gulp.watch('fonts/*', {cwd: SOURCE_DIR}, ['fonts']);
-    // gulp.watch('*.html', {cwd: SOURCE_DIR}, ['index']);
+    // gulp.watch([path.join(SOURCE_DIR, '*.html')], ['index']).on('change', livereload.changed);
+
+    gulp.watch([path.join(SOURCE_DIR, '/**/*')]).on('change', function (file) {
+      Compile(file);
+    });
 
     livereload.listen();
-    gulp.watch([path.join(SOURCE_DIR, '*.html')], ['index']).on('change', livereload.changed);
-    // gulp.watch([path.join(SOURCE_DIR, 'sass/**/*.scss')], ['sass']).on('change', livereload.changed);
-    gulp.watch([path.join(SOURCE_DIR, 'css/**/*.css')], ['cleanCss']).on('change', livereload.changed);
-    gulp.watch([path.join(SOURCE_DIR, 'js/**/*.js')], ['uglify']).on('change', livereload.changed);
-    // gulp.watch([path.join(SOURCE_DIR, 'images/*')], ['imagemin']).on('change', livereload.changed);
-    // gulp.watch([path.join(SOURCE_DIR, 'fonts/*')], ['fonts']).on('change', livereload.changed);
+
 });
 
 if (MODE === 'build') {
